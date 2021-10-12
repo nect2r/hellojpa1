@@ -18,11 +18,11 @@ public class JpaMain {
 
         try{
 
-            Member member = new Member(200L,"member200");
-            em.persist(member);
+            //영속
+            Member member = em.find(Member.class, 150L);
+            member.setName("AAAAA");
 
-            em.flush();
-            System.out.println("=============== flush 됐나여?");
+            em.detach(member);
 
             tx.commit();
         } catch (Exception e){
