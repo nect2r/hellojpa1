@@ -1,16 +1,17 @@
 package hellojpa;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
-public class Team {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@DiscriminatorColumn
+public abstract class Item {
 
     @Id @GeneratedValue
-    @Column(name = "TEAM_ID")
     private Long id;
+
     private String name;
+    private int price;
 
     public Long getId() {
         return id;
@@ -26,5 +27,13 @@ public class Team {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }
