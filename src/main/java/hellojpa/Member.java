@@ -1,9 +1,10 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-public class Member extends BaseEntity{
+public class Member{
 
     @Id @GeneratedValue
     @Column(name = "MEMBER_ID")
@@ -12,21 +13,19 @@ public class Member extends BaseEntity{
     @Column(name = "USERNAME")
     private String username;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private Team team;
+    //기간
+    @Embedded
+    private Period workperiod;
 
-    @OneToOne
-    @JoinColumn(name = "LOCKER_ID")
-    private Locker locker;
+    //주소
+    @Embedded
+    private Address homeaddress;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    @Embedded
+    @AttributeOverrides({@AttributeOverride(name = "city",column=@Column(name = "WORK_CITY"))
+            ,@AttributeOverride(name = "street",column = @Column(name = "WORK_STREET"))
+            ,@AttributeOverride(name = "zipcode",column = @Column(name = "WORK_ZIPCODE"))})
+    private Address workaddress;
 
     public Long getId() {
         return id;
@@ -36,11 +35,27 @@ public class Member extends BaseEntity{
         this.id = id;
     }
 
-    public Team getTeam() {
-        return team;
+    public String getUsername() {
+        return username;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Period getWorkperiod() {
+        return workperiod;
+    }
+
+    public void setWorkperiod(Period workperiod) {
+        this.workperiod = workperiod;
+    }
+
+    public Address getHomeaddress() {
+        return homeaddress;
+    }
+
+    public void setHomeaddress(Address homeaddress) {
+        this.homeaddress = homeaddress;
     }
 }
